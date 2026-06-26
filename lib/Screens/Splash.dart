@@ -1,11 +1,23 @@
+import 'dart:nativewrappers/_internal/vm/lib/ffi_native_type_patch.dart';
+
 import 'package:fixlora/theme/colors.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/rendering.dart';
 
-class SplashScr extends StatelessWidget {
+class SplashScr extends StatefulWidget {
   const SplashScr({super.key});
 
   @override
+  State<SplashScr> createState() => _SplashScrState();
+}
+
+class _SplashScrState extends State<SplashScr> {
+  @override
+  Void initState() {
+    super.initState();
+    Future.microtask(() {});
+  }
+
   Widget build(BuildContext context) {
     final h = MediaQuery.of(context).size.height;
     final w = MediaQuery.of(context).size.width;
@@ -20,9 +32,15 @@ class SplashScr extends StatelessWidget {
                 color: AppColors.primaryLight,
                 borderRadius: BorderRadius.circular(33),
               ),
+
               // child: Text("data"),
               width: w * 0.35,
               height: h * 0.18,
+              child: Image.asset(
+                "assets/images/icon_only.png",
+                height: h * 0.01,
+                width: w * 0.01,
+              ),
             ),
             SizedBox(height: h * 0.03),
             Text(
