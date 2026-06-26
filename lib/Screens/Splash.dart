@@ -1,5 +1,6 @@
 import 'dart:nativewrappers/_internal/vm/lib/ffi_native_type_patch.dart';
 
+import 'package:fixlora/Screens/login.dart';
 import 'package:fixlora/theme/colors.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/rendering.dart';
@@ -13,9 +14,15 @@ class SplashScr extends StatefulWidget {
 
 class _SplashScrState extends State<SplashScr> {
   @override
-  Void initState() {
+  void initState() {
     super.initState();
     Future.microtask(() {});
+    Future.delayed(const Duration(seconds: 4), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => loginscr()),
+      );
+    });
   }
 
   Widget build(BuildContext context) {
