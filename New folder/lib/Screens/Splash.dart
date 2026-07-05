@@ -1,4 +1,4 @@
-import 'package:fixlora/Screens/login.dart';
+import 'package:fixlora/Screens/onboard.dart';
 import 'package:fixlora/theme/colors.dart';
 import 'package:flutter/material.dart';
 
