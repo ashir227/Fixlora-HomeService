@@ -50,15 +50,15 @@ class _SplashScrState extends State<SplashScr> {
             Text(
               "FIXLORA",
               style: TextStyle(
-                color: AppColors.primarySoft,
+                // color: AppColors.primarySoft,
                 fontSize: 35,
                 fontWeight: FontWeight.bold,
               ),
             ),
             Text(
-              "SERVICEHUB",
+              "SERVICE HUB",
               style: TextStyle(
-                color: AppColors.primarySoft,
+                // color: AppColors.primarySoft,
                 fontSize: 35,
                 fontWeight: FontWeight.bold,
               ),

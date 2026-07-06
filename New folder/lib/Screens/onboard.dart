@@ -1,4 +1,5 @@
 import 'package:fixlora/theme/colors.dart';
+import 'package:fixlora/widgets/reuse_btn.dart';
 import 'package:flutter/material.dart';
 
 class loginscr extends StatelessWidget {
@@ -12,19 +13,39 @@ class loginscr extends StatelessWidget {
 
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.only(top: 40, left: 14, right: 14),
           child: Container(
             child: Column(
               children: [
-                Image.asset("assets/images/Plumber.png"),
-                SizedBox(height: h * 0.1),
-                Padding(
-                  padding: const EdgeInsets.only(right: 120),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [Text("Find Trusted Home Service Experts")],
+                Container(
+                  // color: AppColors.error,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25),
                   ),
+                  clipBehavior: Clip.hardEdge,
+
+                  child: Image.asset("assets/images/Plumber.png"),
                 ),
+                SizedBox(height: h * 0.1),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      "Find Trusted Home Service Experts",
+                      style: TextStyle(
+                        fontSize: w * 0.08,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    SizedBox(height: h * 0.02),
+                    Text(
+                      "Book verified electricians, plumbers, cleaners, painters, AC technicians, and more—all from one trusted platform.",
+
+                      style: TextStyle(fontSize: w * 0.045),
+                    ),
+                  ],
+                ),
+                ReUsebtn(),
               ],
             ),
           ),
