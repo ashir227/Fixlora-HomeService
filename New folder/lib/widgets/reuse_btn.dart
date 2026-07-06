@@ -11,7 +11,7 @@ class ReUsebtn extends StatelessWidget {
     return Container(
       height: h * 0.06,
       width: w * 0.85,
-      decoration: BoxDecoration(color: AppColors.btncolor),
+      decoration: BoxDecoration(boxShadow: [], color: AppColors.success),
     );
   }
 }
