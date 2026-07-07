@@ -1,9 +1,10 @@
+import 'package:fixlora/Screens/loginscr.dart';
 import 'package:fixlora/theme/colors.dart';
 import 'package:fixlora/widgets/reuse_btn.dart';
 import 'package:flutter/material.dart';
 
-class loginscr extends StatelessWidget {
-  const loginscr({super.key});
+class OnBoardscr extends StatelessWidget {
+  const OnBoardscr({super.key});
   @override
   Widget build(BuildContext context) {
     final h = MediaQuery.of(context).size.height;
@@ -45,7 +46,14 @@ class loginscr extends StatelessWidget {
                     ),
                   ],
                 ),
-                ReUsebtn(),
+                SizedBox(height: h * 0.21),
+                ReUseBtn(
+                  text: "Continue",
+                  onPress: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Loginscr()),
+                  ),
+                ),
               ],
             ),
           ),

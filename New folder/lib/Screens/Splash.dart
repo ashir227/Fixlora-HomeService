@@ -17,7 +17,7 @@ class _SplashScrState extends State<SplashScr> {
       if (!mounted) return;
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => loginscr()),
+        MaterialPageRoute(builder: (context) => OnBoardscr()),
       );
     });
   }

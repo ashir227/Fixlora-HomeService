@@ -27,7 +27,7 @@ class AppColors {
   static const Color borderFocus = Color(0xFF2563EB);
 
   // ── Status ───────────────────────────────
-  static const Color success = Color(0xFF16A34A);
+  static const Color btnclr2 = Color(0xFF16A10A);
   static const Color btncolor = Color(0xFF22c55e);
   static const Color successLight = Color(0xFFDCFCE7);
   static const Color warning = Color(0xFFF59E0B);
