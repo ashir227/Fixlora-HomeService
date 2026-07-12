@@ -21,6 +21,7 @@ class AppColors {
   static const Color textHint = Color(0xFF888888);
   static const Color textDisabled = Color(0xFFBBBBBB);
   static const Color textOnPrimary = Color(0xFFFFFFFF);
+  static const Color fieldfill = Color(0xFFF3F4F6);
 
   // ── Border ───────────────────────────────
   static const Color border = Color(0xFFE0E0E0);
