@@ -6,6 +6,7 @@ class CstmFld extends StatelessWidget {
   final FormFieldValidator validator;
   final TextEditingController controller;
   final Widget? prefixIcon;
+  final Widget? suffixIcon;
   // KeyboardListener key
   const CstmFld({
     super.key,
@@ -13,6 +14,7 @@ class CstmFld extends StatelessWidget {
     required this.validator,
     required this.controller,
     this.prefixIcon,
+     this.suffixIcon,
   });
 
   @override

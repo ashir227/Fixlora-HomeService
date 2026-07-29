@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "447534508469",
+    "project_id": "fixlora",
+    "storage_bucket": "fixlora.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:447534508469:android:407b95eca52e1d060c51fc",
+        "android_client_info": {
+          "package_name": "com.example.fixlora"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADSYRM7yh1s7eG1FNTs7MGhznDGLkqAcg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

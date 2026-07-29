@@ -1,6 +1,8 @@
 import 'package:fixlora/theme/colors.dart';
 import 'package:fixlora/widgets/cstm_field.dart';
 import 'package:fixlora/widgets/cstmtxt.dart';
+import 'package:fixlora/widgets/reuse_btn.dart';
+import 'package:fixlora/widgets/txtbtn.dart';
 import 'package:flutter/material.dart';
 
 class Loginscr extends StatelessWidget {
@@ -85,7 +87,16 @@ class Loginscr extends StatelessWidget {
                     },
                     controller: passcntrl,
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [Txtbtn()],
+                  ),
                 ],
+              ),
+
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [ReUseBtn()],
               ),
             ],
           ),
