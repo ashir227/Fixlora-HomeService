@@ -99,7 +99,14 @@ class Loginscr extends StatelessWidget {
                 children: [
                   ReUseBtn(),
                   SizedBox(height: h * 0.02),
-                  Txtbtn(text: "kkk"),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("New here?"),
+                      Txtbtn(text: "Create account"),
+                    ],
+                  ),
                 ],
               ),
             ],
