@@ -98,6 +98,8 @@ class Loginscr extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   ReUseBtn(),
+                  SizedBox(height: 0.1),
+                  Divider(),
                   SizedBox(height: h * 0.02),
 
                   Row(
