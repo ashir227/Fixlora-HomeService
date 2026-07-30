@@ -12,7 +12,7 @@ class Txtbtn extends StatelessWidget {
     final w = MediaQuery.of(context).size.width;
 
     return TextButton(
-      onPressed: () {},
+      onPressed: onPress,
       child: Text(
         text ?? "Forgot Password?",
         style: TextStyle(

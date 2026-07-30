@@ -1,3 +1,4 @@
+import 'package:fixlora/Screens/Signup.dart';
 import 'package:fixlora/theme/colors.dart';
 import 'package:fixlora/widgets/cstm_field.dart';
 import 'package:fixlora/widgets/cstmtxt.dart';
@@ -106,7 +107,13 @@ class Loginscr extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text("New here?"),
-                      Txtbtn(text: "Create account"),
+                      Txtbtn(
+                        text: "Create account",
+                        onPress: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Signup()),
+                        ),
+                      ),
                     ],
                   ),
                 ],
