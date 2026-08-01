@@ -30,12 +30,21 @@ class Signup extends StatelessWidget {
                 Size: w * 0.08,
                 FontWeight: FontWeight.bold,
               ),
+              SizedBox(height: h * 0.01),
               reusetext(
                 context: context,
                 txt: "join our most trusted platform",
                 clr: AppColors.textHint,
                 Size: w * 0.04,
                 FontWeight: FontWeight.w400,
+              ),
+              SizedBox(height: h * 0.04),
+              reusetext(
+                context: context,
+                txt: "txt",
+                clr: AppColors.textHint,
+                Size: w * 0.05,
+                FontWeight: FontWeight.w500,
               ),
 
               CstmFld(validator: (value) {}, controller: namecntrl),
