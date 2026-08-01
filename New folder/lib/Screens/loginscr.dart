@@ -98,7 +98,7 @@ class Loginscr extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  ReUseBtn(),
+                  ReUseBtn(text: "Sign in"),
                   SizedBox(height: 0.1),
                   Divider(),
                   SizedBox(height: h * 0.02),

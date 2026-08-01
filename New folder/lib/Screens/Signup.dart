@@ -1,6 +1,7 @@
 import 'package:fixlora/theme/colors.dart';
 import 'package:fixlora/widgets/cstm_field.dart';
 import 'package:fixlora/widgets/cstmtxt.dart';
+import 'package:fixlora/widgets/reuse_btn.dart';
 import 'package:flutter/material.dart';
 
 class Signup extends StatelessWidget {
@@ -41,13 +42,102 @@ class Signup extends StatelessWidget {
               SizedBox(height: h * 0.04),
               reusetext(
                 context: context,
-                txt: "txt",
+                txt: "Full name",
                 clr: AppColors.textHint,
-                Size: w * 0.05,
+                Size: w * 0.04,
                 FontWeight: FontWeight.w500,
               ),
 
-              CstmFld(validator: (value) {}, controller: namecntrl),
+              CstmFld(
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return "Please enter your name";
+                  }
+
+                  if (value.trim().length < 3) {
+                    return "Name must be at least 3 characters";
+                  }
+
+                  return null;
+                },
+                controller: namecntrl,
+              ),
+              SizedBox(height: h * 0.03),
+              reusetext(
+                context: context,
+                txt: "Email",
+                clr: AppColors.textHint,
+                Size: w * 0.04,
+                FontWeight: FontWeight.w500,
+              ),
+
+              CstmFld(
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return "Please enter your email";
+                  }
+
+                  if (!RegExp(
+                    r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                  ).hasMatch(value.trim())) {
+                    return "Please enter a valid email";
+                  }
+
+                  return null;
+                },
+                controller: namecntrl,
+              ),
+              SizedBox(height: h * 0.03),
+              reusetext(
+                context: context,
+                txt: "Phone",
+                clr: AppColors.textHint,
+                Size: w * 0.04,
+                FontWeight: FontWeight.w500,
+              ),
+
+              CstmFld(
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return "Please enter your phone number";
+                  }
+
+                  if (!RegExp(r'^03[0-9]{9}$').hasMatch(value.trim())) {
+                    return "Enter a valid phone number";
+                  }
+
+                  return null;
+                },
+                controller: namecntrl,
+              ),
+              SizedBox(height: h * 0.03),
+              reusetext(
+                context: context,
+                txt: "Password",
+                clr: AppColors.textHint,
+                Size: w * 0.04,
+                FontWeight: FontWeight.w500,
+              ),
+
+              CstmFld(
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please enter your password";
+                  }
+
+                  if (value.length < 6) {
+                    return "Password must be at least 8 characters";
+                  }
+
+                  return null;
+                },
+                controller: namecntrl,
+              ),
+              SizedBox(height: h * 0.09),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [ReUseBtn(text: "Create account")],
+              ),
             ],
           ),
         ),
