@@ -21,6 +21,7 @@ class Signup extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: h * 0.06),
               reusetext(
                 context: context,
                 txt: "Create account",
