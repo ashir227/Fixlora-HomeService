@@ -1,28 +1,87 @@
+import 'package:fixlora/Provider/auth_provider.dart';
+// import 'package:fixlora/providers/auth_provider.dart';
 import 'package:fixlora/theme/colors.dart';
 import 'package:fixlora/widgets/cstm_field.dart';
 import 'package:fixlora/widgets/cstmtxt.dart';
 import 'package:fixlora/widgets/reuse_btn.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class Signup extends StatelessWidget {
+class Signup extends StatefulWidget {
+  // ← StatefulWidget
   const Signup({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final nameController = TextEditingController();
-    final emailController = TextEditingController();
-    final phoneController = TextEditingController();
-    final passwordController = TextEditingController();
+  State<Signup> createState() => _SignupState();
+}
 
+class _SignupState extends State<Signup> {
+  // ── Controllers yahan — dispose hoga sahi ──
+  final _formKey = GlobalKey<FormState>();
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final phoneController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    phoneController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  // ── onPressed ka poora logic ───────────────
+  void _onSignUp() async {
+    // 1. Form validate karo
+    if (!_formKey.currentState!.validate()) return;
+
+    // 2. Provider ko call karo
+    await context.read<AuthProvider>().signUp(
+      name: nameController.text.trim(),
+      email: emailController.text.trim(),
+      phone: phoneController.text.trim(),
+      password: passwordController.text.trim(),
+    );
+
+    if (!mounted) return;
+
+    final auth = context.read<AuthProvider>();
+
+    // 3. Result check karo
+    if (auth.status == AuthStatus.success) {
+      // Home screen par jao
+      Navigator.pushReplacementNamed(context, '/home');
+    } else {
+      // Error snackbar dikhao
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(auth.errorMessage ?? 'Error'),
+          backgroundColor: AppColors.error,
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final h = MediaQuery.of(context).size.height;
     final w = MediaQuery.of(context).size.width;
+
+    // Loading check — sirf button ke liye
+    final isLoading =
+        context.watch<AuthProvider>().status == AuthStatus.loading;
+
     return Scaffold(
       backgroundColor: AppColors.surface,
-
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Container(
+          child: Form(
+            // ← Form wrap — validation ke liye
+            key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -30,7 +89,6 @@ class Signup extends StatelessWidget {
                 reusetext(
                   context: context,
                   txt: "Create account",
-
                   clr: AppColors.textPrimary,
                   Size: w * 0.08,
                   FontWeight: FontWeight.bold,
@@ -38,12 +96,14 @@ class Signup extends StatelessWidget {
                 SizedBox(height: h * 0.01),
                 reusetext(
                   context: context,
-                  txt: "join our most trusted platform",
+                  txt: "Join our most trusted platform",
                   clr: AppColors.textHint,
                   Size: w * 0.04,
                   FontWeight: FontWeight.w400,
                 ),
                 SizedBox(height: h * 0.04),
+
+                // ── Name ──────────────────
                 reusetext(
                   context: context,
                   txt: "Full name",
@@ -51,22 +111,20 @@ class Signup extends StatelessWidget {
                   Size: w * 0.04,
                   FontWeight: FontWeight.w500,
                 ),
-
                 CstmFld(
+                  controller: nameController,
+                  hintText: "Ali Khan",
                   validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
+                    if (value == null || value.trim().isEmpty)
                       return "Please enter your name";
-                    }
-
-                    if (value.trim().length < 3) {
+                    if (value.trim().length < 3)
                       return "Name must be at least 3 characters";
-                    }
-
                     return null;
                   },
-                  controller: nameController,
                 ),
                 SizedBox(height: h * 0.03),
+
+                // ── Email ─────────────────
                 reusetext(
                   context: context,
                   txt: "Email",
@@ -74,24 +132,23 @@ class Signup extends StatelessWidget {
                   Size: w * 0.04,
                   FontWeight: FontWeight.w500,
                 ),
-
                 CstmFld(
+                  controller: emailController,
+                  hintText: "ali@email.com",
+                  keyboardType: TextInputType.emailAddress,
                   validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
+                    if (value == null || value.trim().isEmpty)
                       return "Please enter your email";
-                    }
-
                     if (!RegExp(
                       r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
-                    ).hasMatch(value.trim())) {
+                    ).hasMatch(value.trim()))
                       return "Please enter a valid email";
-                    }
-
                     return null;
                   },
-                  controller: emailController,
                 ),
                 SizedBox(height: h * 0.03),
+
+                // ── Phone ─────────────────
                 reusetext(
                   context: context,
                   txt: "Phone",
@@ -99,22 +156,21 @@ class Signup extends StatelessWidget {
                   Size: w * 0.04,
                   FontWeight: FontWeight.w500,
                 ),
-
                 CstmFld(
+                  controller: phoneController,
+                  hintText: "03001234567",
+                  keyboardType: TextInputType.phone,
                   validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
+                    if (value == null || value.trim().isEmpty)
                       return "Please enter your phone number";
-                    }
-
-                    if (!RegExp(r'^03[0-9]{9}$').hasMatch(value.trim())) {
-                      return "Enter a valid phone number";
-                    }
-
+                    if (!RegExp(r'^03[0-9]{9}$').hasMatch(value.trim()))
+                      return "Enter valid number (03xxxxxxxxx)";
                     return null;
                   },
-                  controller: phoneController,
                 ),
                 SizedBox(height: h * 0.03),
+
+                // ── Password ──────────────
                 reusetext(
                   context: context,
                   txt: "Password",
@@ -122,26 +178,31 @@ class Signup extends StatelessWidget {
                   Size: w * 0.04,
                   FontWeight: FontWeight.w500,
                 ),
-
                 CstmFld(
+                  controller: passwordController,
+                  hintText: "••••••••",
+                  obscureText: true,
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
+                    if (value == null || value.isEmpty)
                       return "Please enter your password";
-                    }
-
-                    if (value.length < 6) {
-                      return "Password must be at least 8 characters";
-                    }
-
+                    if (value.length < 6)
+                      return "Password must be at least 6 characters";
                     return null;
                   },
-                  controller: passwordController,
                 ),
                 SizedBox(height: h * 0.09),
+
+                // ── Button ────────────────
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [ReUseBtn(text: "Create account")],
+                  children: [
+                    ReUseBtn(
+                      text: isLoading ? "Creating..." : "Create account",
+                      onPress: isLoading ? null : _onSignUp, // ← yahan logic
+                    ),
+                  ],
                 ),
+                SizedBox(height: h * 0.03),
               ],
             ),
           ),

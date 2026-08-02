@@ -1,3 +1,4 @@
+import 'package:fixlora/Provider/auth_provider.dart';
 import 'package:fixlora/Screens/Signup.dart';
 import 'package:fixlora/theme/colors.dart';
 import 'package:fixlora/widgets/cstm_field.dart';
@@ -5,22 +6,68 @@ import 'package:fixlora/widgets/cstmtxt.dart';
 import 'package:fixlora/widgets/reuse_btn.dart';
 import 'package:fixlora/widgets/txtbtn.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class Loginscr extends StatelessWidget {
+class Loginscr extends StatefulWidget {
   const Loginscr({super.key});
+
+  @override
+  State<Loginscr> createState() => _LoginscrState();
+}
+
+class _LoginscrState extends State<Loginscr> {
+  // ── Form + Controllers ────────────────────
+  final _formKey = GlobalKey<FormState>();
+  final mailcntrl = TextEditingController();
+  final passcntrl = TextEditingController();
+
+  @override
+  void dispose() {
+    mailcntrl.dispose();
+    passcntrl.dispose();
+    super.dispose();
+  }
+
+  // ── Login Logic ───────────────────────────
+  void _onLogin() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    await context.read<AuthProvider>().login(
+      email: mailcntrl.text.trim(),
+      password: passcntrl.text.trim(),
+    );
+
+    if (!mounted) return;
+
+    final auth = context.read<AuthProvider>();
+
+    if (auth.status == AuthStatus.success) {
+      Navigator.pushReplacementNamed(context, '/home');
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(auth.errorMessage ?? 'Error'),
+          backgroundColor: AppColors.error,
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final h = MediaQuery.of(context).size.height;
     final w = MediaQuery.of(context).size.width;
-    TextEditingController mailcntrl = TextEditingController();
-    TextEditingController passcntrl = TextEditingController();
+
+    final isLoading =
+        context.watch<AuthProvider>().status == AuthStatus.loading;
 
     return Scaffold(
       backgroundColor: AppColors.surface,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Container(
+        child: Form(
+          key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -46,72 +93,70 @@ class Loginscr extends StatelessWidget {
                 FontWeight: FontWeight.w500,
               ),
               SizedBox(height: h * 0.05),
-              Column(
-                children: [
-                  CstmFld(
-                    prefixIcon: Icon(
-                      Icons.mail_lock_outlined,
-                      color: AppColors.textHint,
-                    ),
-                    validator: (value) {
-                      if (value == null) {
-                        return "Please enter valid Email";
-                      }
-                      int? numm = int.tryParse(value);
-                      if (numm == null) {
-                        return "Please enter valid Email";
-                      }
-                      if (numm! < 0) {
-                        return "Please enter positive value";
-                      }
-                    },
-                    controller: mailcntrl,
-                  ),
 
-                  SizedBox(height: h * 0.04),
-                  CstmFld(
-                    prefixIcon: Icon(
-                      Icons.lock_outline,
-                      color: AppColors.textHint,
-                    ),
-                    validator: (value) {
-                      if (value == null) {
-                        return "Please enter valid Email";
-                      }
-                      int? numm = int.tryParse(value);
-                      if (numm == null) {
-                        return "Please enter valid Email";
-                      }
-                      if (numm! < 0) {
-                        return "Please enter positive value";
-                      }
-                    },
-                    controller: passcntrl,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [Txtbtn()],
-                  ),
-                ],
+              // ── Email ─────────────────────
+              CstmFld(
+                controller: mailcntrl,
+                hintText: "ali@email.com",
+                keyboardType: TextInputType.emailAddress,
+                prefixIcon: Icon(
+                  Icons.mail_lock_outlined,
+                  color: AppColors.textHint,
+                ),
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty)
+                    return "Please enter your email";
+                  if (!RegExp(
+                    r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                  ).hasMatch(value.trim()))
+                    return "Please enter a valid email";
+                  return null;
+                },
+              ),
+              SizedBox(height: h * 0.02),
+
+              // ── Password ──────────────────
+              CstmFld(
+                controller: passcntrl,
+                hintText: "••••••••",
+                obscureText: true,
+                prefixIcon: Icon(Icons.lock_outline, color: AppColors.textHint),
+                validator: (value) {
+                  if (value == null || value.isEmpty)
+                    return "Please enter your password";
+                  if (value.length < 6) return "Min 6 characters";
+                  return null;
+                },
               ),
 
+              // ── Forgot Password ───────────
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [Txtbtn(text: "Forgot password?", onPress: () {})],
+              ),
+              SizedBox(height: h * 0.02),
+
+              // ── Button + Links ────────────
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  ReUseBtn(text: "Sign in"),
-                  SizedBox(height: 0.1),
-                  Divider(),
-                  SizedBox(height: h * 0.02),
-
+                  ReUseBtn(
+                    text: isLoading ? "Signing in..." : "Sign in",
+                    onPress: isLoading ? null : _onLogin,
+                  ),
+                  const Divider(height: 32),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("New here?"),
+                      const Text(
+                        "New here?",
+                        style: TextStyle(color: AppColors.textHint),
+                      ),
                       Txtbtn(
                         text: "Create account",
                         onPress: () => Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => Signup()),
+                          MaterialPageRoute(builder: (_) => const Signup()),
                         ),
                       ),
                     ],
