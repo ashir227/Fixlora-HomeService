@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 enum AuthStatus { idle, loading, success, error }
 
-class AuthProvider extends ChangeNotifier {
+class FixAuthProvider extends ChangeNotifier {
   final AuthService _service = AuthService();
 
   AuthStatus status = AuthStatus.idle;

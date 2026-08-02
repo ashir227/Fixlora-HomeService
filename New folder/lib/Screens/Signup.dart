@@ -38,7 +38,7 @@ class _SignupState extends State<Signup> {
     if (!_formKey.currentState!.validate()) return;
 
     // 2. Provider ko call karo
-    await context.read<AuthProvider>().signUp(
+    await context.read<FixAuthProvider>().signUp(
       name: nameController.text.trim(),
       email: emailController.text.trim(),
       phone: phoneController.text.trim(),
@@ -47,7 +47,7 @@ class _SignupState extends State<Signup> {
 
     if (!mounted) return;
 
-    final auth = context.read<AuthProvider>();
+    final auth = context.read<FixAuthProvider>();
 
     // 3. Result check karo
     if (auth.status == AuthStatus.success) {
@@ -72,7 +72,7 @@ class _SignupState extends State<Signup> {
 
     // Loading check — sirf button ke liye
     final isLoading =
-        context.watch<AuthProvider>().status == AuthStatus.loading;
+        context.watch<FixAuthProvider>().status == AuthStatus.loading;
 
     return Scaffold(
       backgroundColor: AppColors.surface,

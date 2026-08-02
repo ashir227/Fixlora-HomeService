@@ -32,14 +32,14 @@ class _LoginscrState extends State<Loginscr> {
   void _onLogin() async {
     if (!_formKey.currentState!.validate()) return;
 
-    await context.read<AuthProvider>().login(
+    await context.read<FixAuthProvider>().login(
       email: mailcntrl.text.trim(),
       password: passcntrl.text.trim(),
     );
 
     if (!mounted) return;
 
-    final auth = context.read<AuthProvider>();
+    final auth = context.read<FixAuthProvider>();
 
     if (auth.status == AuthStatus.success) {
       Navigator.pushReplacementNamed(context, '/home');
@@ -60,7 +60,7 @@ class _LoginscrState extends State<Loginscr> {
     final w = MediaQuery.of(context).size.width;
 
     final isLoading =
-        context.watch<AuthProvider>().status == AuthStatus.loading;
+        context.watch<FixAuthProvider>().status == AuthStatus.loading;
 
     return Scaffold(
       backgroundColor: AppColors.surface,
